@@ -90,10 +90,10 @@
 
 function copyToClipboard(button) {
   var cell = button.parentNode;
-  var keywords = cell.innerText.split("Copy")[0].trim();
-  navigator.clipboard.writeText(keywords);
-  
+  var keywords = cell.previousElementSibling.textContent;
+  navigator.clipboard.writeText(keywords.trim());
 }
+
 
       var input = document.getElementById("myInput").value;
       var keywords = generateKeywords(input);
