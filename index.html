@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Keyword Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f2f2f2;
+    }
+    #container {
+      width: 50%;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 10px #ccc;
+    }
+    #myInput {
+      width: 100%;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: none;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+    #resultTable {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    #resultTable th,
+    #resultTable td {
+      padding: 10px;
+      border: 1px solid #ddd;
+      text-align: left;
+    }
+  </style>
+</head>
+<body>
+    <div id="container">
+        <input type="text" id="myInput" placeholder="Enter words here..." onkeydown="if(event.keyCode==13) addItem()">
+        <table id="resultTable">
+          <thead>
+            <tr>
+              <th>Input</th>
+              <th>Keywords</th>
+              <th>Copy</th>
+            </tr>
+          </thead>
+          <tbody id="resultTableBody"></tbody>
+        </table>
+      </div>
+
+  <script>
+    function generateKeywords(input) {
+      var words = input.split(" ");
+      var keywords = [];
+
+      for (var k = 1; k <= words.length; k++) {
+        for (var i = 0; i < words.length - k + 1; i++) {
+          var word = "";
+          for (var j = 0; j < k; j++) {
+            var currentWord = words[i + j];
+            word += currentWord.charAt(0).toUpperCase() + currentWord.slice(1) + " ";
+          }
+          word = word.trim();
+          for (var j = 1; j <= word.length; j++) {
+            var substring = word.substring(0, j);
+            keywords.push(substring);
+            keywords.push(substring.toLowerCase());
+          }
+        }
+      }
+
+      var output = keywords.join("; "); // separate keywords with semicolon and space
+      return output;
+    }
+
+    function addItem() {
+  var input = document.getElementById("myInput").value;
+  var keywords = generateKeywords(input);
+
+  var row = "<tr><td>" + input + "</td><td>" + keywords + "</td><td><button onclick='copyToClipboard(this)'>Copy</button></td></tr>";
+  document.getElementById("resultTableBody").innerHTML += row;
+
+  document.getElementById("myInput").value = "";
+}
+
+
+function copyToClipboard(button) {
+  var cell = button.parentNode;
+  var keywords = cell.innerText.split("Copy")[0].trim();
+  navigator.clipboard.writeText(keywords);
+  
+}
+
+      var input = document.getElementById("myInput").value;
+      var keywords = generateKeywords(input);
+
+      var row = "<tr><td>" + input + "</td><td>" + keywords + "</td></tr>";
+      document.getElementById("resultTableBody").innerHTML += row;
+
+      document.getElementById("myInput").value = "";
+    
+  </script>
+</body>
+
+</html>
