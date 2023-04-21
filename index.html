@@ -38,19 +38,22 @@
   </style>
 </head>
 <body>
-    <div id="container">
-        <input type="text" id="myInput" placeholder="Enter words here..." onkeydown="if(event.keyCode==13) addItem()">
-        <table id="resultTable">
-          <thead>
-            <tr>
-              <th>Input</th>
-              <th>Keywords</th>
-              <th>Copy</th>
-            </tr>
-          </thead>
-          <tbody id="resultTableBody"></tbody>
-        </table>
-      </div>
+  <div id="container">
+      
+    <input type="text" id="myInput" placeholder="Enter words here..." onkeydown="if(event.keyCode==13) addItem()">
+    <button onclick="clearTable()">Clear</button>
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th>Input</th>
+          <th>Keywords</th>
+          <th>Copy</th>
+        </tr>
+      </thead>
+      <tbody id="resultTableBody"></tbody>
+    </table>
+
+  </div>
 
   <script>
     function generateKeywords(input) {
@@ -78,32 +81,24 @@
     }
 
     function addItem() {
-  var input = document.getElementById("myInput").value;
-  var keywords = generateKeywords(input);
-
-  var row = "<tr><td>" + input + "</td><td>" + keywords + "</td><td><button onclick='copyToClipboard(this)'>Copy</button></td></tr>";
-  document.getElementById("resultTableBody").innerHTML += row;
-
-  document.getElementById("myInput").value = "";
-}
-
-
-function copyToClipboard(button) {
-  var cell = button.parentNode;
-  var keywords = cell.previousElementSibling.textContent;
-  navigator.clipboard.writeText(keywords.trim());
-}
-
-
       var input = document.getElementById("myInput").value;
       var keywords = generateKeywords(input);
 
-      var row = "<tr><td>" + input + "</td><td>" + keywords + "</td></tr>";
+      var row = "<tr><td>" + input + "</td><td>" + keywords + "</td><td><button onclick='copyToClipboard(this)'>Copy</button></td></tr>";
       document.getElementById("resultTableBody").innerHTML += row;
 
       document.getElementById("myInput").value = "";
-    
+    }
+
+    function copyToClipboard(button) {
+      var cell = button.parentNode;
+      var keywords = cell.previousElementSibling.textContent;
+      navigator.clipboard.writeText(keywords.trim());
+    }
+
+    function clearTable() {
+      document.getElementById("resultTableBody").innerHTML = "";
+    }
   </script>
 </body>
-
 </html>
